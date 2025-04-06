@@ -28,7 +28,7 @@ The last value of `eax` was `DWORD PTR [rbp-0x4]` that was assigned at `<+44>`.
 At first `DWORD PTR [rbp-0x4]` corresponded to `0x9fe1a` on a stack.
 However, later it was multiplied by `DWORD PTR [rbp-0x8]` that corresponded to `0x4` on the stack. 
 After that `0x1f5` was added to it.
-The result of these calculation is `0x9fe1a * 0x4 + 0x1f5 = 0x27FA5D`.
+The result of these calculations is `0x9fe1a * 0x4 + 0x1f5 = 0x27FA5D`.
 So, we need to convert the result in `DWORD PTR [rbp-0x4]` to decimal.
 
 ## Solution
