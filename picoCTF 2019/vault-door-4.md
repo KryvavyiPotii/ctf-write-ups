@@ -65,7 +65,7 @@ class VaultDoor4 {
 
 The source code has 2 functions: `main` and `checkPassword`.
 `main` receives some password from user and then checks if it is correct by calling `checkPassword`.
-There the entered password is converted to bytes with `toBytes` method and is stored in the `passBytes` variable.
+There the entered password is converted to bytes with `getBytes` method and is stored in the `passBytes` variable.
 After that it is compared with every byte of the `myBytes` array.
 In this array bytes are presented in decimal, hexadecimal, octal and as ASCII `char`'s.
 So, to get the password we need to convert every element of the `myBytes` array to ASCII `char`'s.
