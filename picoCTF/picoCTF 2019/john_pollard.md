@@ -19,7 +19,7 @@
 
 The file is a PEM certificate.
 
-```
+```console
 $ file cert
 cert: PEM certificate
 ```
@@ -39,7 +39,7 @@ For that we need to factorize the modulus which is a public parameter.
 
 We obtained the modulus with `openssl`.
 
-```
+```console
 $ openssl x509 -in cert -noout -text | grep Modulus
                 Modulus: 4966306421059967 (0x11a4d45212b17f)
 ```
