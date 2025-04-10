@@ -25,7 +25,7 @@ Image depicts a set of cocentrical partial circles.
 
 The file is, indeed, a PNG.
 
-```
+```console
 $ file pico_img.png 
 pico_img.png: PNG image data, 600 x 600, 8-bit/color RGB, non-interlaced
 ```
@@ -34,7 +34,7 @@ pico_img.png: PNG image data, 600 x 600, 8-bit/color RGB, non-interlaced
 
 The flag was found.
 
-```
+```console
 $ strings pico_img.png  | grep pico
 picoCTF{s0_m3ta_d8944929}
 ```
@@ -43,7 +43,7 @@ picoCTF{s0_m3ta_d8944929}
 
 Although the flag was already found, we did an extra check of metadata, because it is mentioned in the title.
 
-```
+```console
 $ exiftool pico_img.png 
 ExifTool Version Number         : 12.42
 File Name                       : pico_img.png
