@@ -24,7 +24,7 @@ $ file cert
 cert: PEM certificate
 ```
 
-### [SSLShopper](https://www.sslshopper.com/certificate-decoder.html).
+### [SSLShopper](https://www.sslshopper.com/certificate-decoder.html)
 
 The tool recognized that the embedded key size is only 53 bit.
 
