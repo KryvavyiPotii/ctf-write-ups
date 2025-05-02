@@ -150,14 +150,60 @@ decode it.
 Data extraction and decoding was done with Python.
 
 ```python
+ENCODED_FLAG_OFFSET = 723
+ENCODED_DATA_LENGTH = 50 * 8 + 50
 
+
+def bits_to_byte(bits):
+    byte = 0
+
+    for (i, bit) in enumerate(bits):
+        byte |= bit << i
+
+    return byte
+
+
+def extract_encoded_flag():
+    with open('encoded.bmp', 'rb') as f:
+        f.seek(ENCODED_FLAG_OFFSET, 0)
+        data = f.read(ENCODED_DATA_LENGTH)
+
+    # Skipping bytes that do not contain any flag data. 
+    encoded_flag = [x for (i, x) in enumerate(data) if i % 9 != 8]
+    
+    return encoded_flag
+
+
+def decode_encoded_flag(encoded_flag):
+    flag = ''
+    last_bits = [byte & 1 for byte in encoded_flag]
+    
+    for i in range(0, len(last_bits), 8):
+        byte_in_bits = last_bits[i:i + 8]
+        byte = bits_to_byte(byte_in_bits)
+
+        char = chr(byte)
+        flag += char
+
+    return flag
+
+
+def get_flag():
+    encoded_flag = extract_encoded_flag()
+    decoded_flag = decode_encoded_flag(encoded_flag)
+
+    return decoded_flag
+
+
+if __name__ == '__main__':
+    print(get_flag())
 ```
 
 After executing this `get_flag.py` script we got our flag.
 
 ```console
 $ python get_flag.py 
-
+picoCTF{4n0th3r_L5b_pr0bl3m_00000000000001f8ae184}
 ```
 
-So, the flag is ``.
+So, the flag is `picoCTF{4n0th3r_L5b_pr0bl3m_00000000000001f8ae184}`.
