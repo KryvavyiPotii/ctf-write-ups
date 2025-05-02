@@ -8,7 +8,7 @@ See what you can make of it. There should be a flag somewhere.*
 
 ### Hints
 
-**
+*You will want to reverse how the LSB encoding works on this problem*
 
 ## Input data
 
