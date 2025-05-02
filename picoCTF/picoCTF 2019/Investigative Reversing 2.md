@@ -8,7 +8,9 @@ There should be a flag somewhere.*
 
 ### Hints
 
-
+*1. Try using some forensics skills on the image*
+*2. This problem requires both forensics and reversing skills*
+*3. What is LSB encoding?*
 
 ## Input data
 
@@ -148,10 +150,7 @@ int main(void) {
 }
 ```
 
-As we can see, `mystery` opens `flag.txt`, `original.bmp` and `encoded.bmp`.
-First, it reads 2000 bytes from `original.bmp` and 50 bytes from `flag.txt`.
-Second, it encrypts the flag data with the `codedChar` function with `original.bmp` and `flag.txt` data as arguments and
-appends it to `encoded.bmp`.
+Encrytion happends in the `codedChar` function
 It's decompiled code is given below.
 
 ```c
@@ -166,7 +165,7 @@ char codedChar(int index,char flag_char,uchar original_char) {
 }
 ```
 
-Finally, `mystery` appends the rest of the `original.bmp` data to `encoded.bmp`.
+As we can see, this function returns the byte from the `original.bmp` with the last bit set to the bit of `flag.txt`.
 So, in order to get the flag we need to extract 50 bytes at offset 2000 from `encoded.bmp` and decode it.
    
 ## Solution
@@ -174,14 +173,58 @@ So, in order to get the flag we need to extract 50 bytes at offset 2000 from `en
 Data extraction and decoding was done with Python.
 
 ```python
+ENCODED_FLAG_OFFSET = 2000
+ENCODED_FLAG_LENGTH = 50 * 8
 
+
+def bits_to_byte(bits):
+    byte = 0
+
+    for (i, bit) in enumerate(bits):
+        byte |= bit << i
+
+    return byte
+
+
+def extract_encoded_flag():
+    with open('encoded.bmp', 'rb') as f:
+        f.seek(ENCODED_FLAG_OFFSET, 0)
+        encoded_flag = f.read(ENCODED_FLAG_LENGTH)
+
+    return encoded_flag
+
+
+def decode_encoded_flag(encoded_flag):
+    flag = ''
+    last_bits = [byte & 1 for byte in encoded_flag]
+    
+    for i in range(0, len(last_bits), 8):
+        byte_in_bits = last_bits[i:i + 8]
+        byte = bits_to_byte(byte_in_bits)
+
+        original_byte = byte + 5
+        char = chr(original_byte)
+        flag += char
+
+    return flag
+
+
+def get_flag():
+    encoded_flag = extract_encoded_flag()
+    decoded_flag = decode_encoded_flag(encoded_flag)
+
+    return decoded_flag
+
+
+if __name__ == '__main__':
+    print(get_flag())
 ```
 
 After executing this `get_flag.py` script we got our flag.
 
 ```console
 $ python get_flag.py 
-picoCTF{An0tha_1_9a47141}
+picoCTF{n3xt_0n30000000000000000000000000c5c7dd39}
 ```
 
-So, the flag is `picoCTF{An0tha_1_9a47141}`.
+So, the flag is `picoCTF{n3xt_0n30000000000000000000000000c5c7dd39}`.
