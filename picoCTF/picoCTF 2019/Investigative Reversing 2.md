@@ -132,7 +132,8 @@ int main(void) {
       fread(&char_buffer,1,1,original_file);
     }
   }
-  
+
+  // Copying all data that is left in `original.bmp` to `encoded.bmp`.
   while (temp == 1) {
     fputc((int)char_buffer,encoded_file);
     bytes_read = fread(&char_buffer,1,1,original_file);
